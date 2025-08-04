@@ -18,4 +18,8 @@ public class VotoDTO {
 
     @NotNull(message = "Voto (true/false) é obrigatório")
     private Boolean voto;
+
+    private Integer associadoId;
+
+    private String escolha;
 }

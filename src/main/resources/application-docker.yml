@@ -2,10 +2,10 @@ spring:
   profiles: docker
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/votacao_db
+    url: jdbc:postgresql://postgres:5432/votacao
     driver-class-name: org.postgresql.Driver
-    username: votacao
-    password: votacao
+    username: ${DB_USER:}
+    password: ${DB_PASS:}
 
   jpa:
     hibernate:

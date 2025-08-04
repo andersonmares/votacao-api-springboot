@@ -8,3 +8,11 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enable: true
+cpf:
+  service:
+    url: https://brasilapi.com.br/api/cpf/v1

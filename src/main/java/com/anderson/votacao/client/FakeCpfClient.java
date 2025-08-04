@@ -12,7 +12,9 @@ public class FakeCpfClient {
     private final Random random = new Random();
 
     public CpfStatus verificarCpf(String cpf) {
-        // 50% chance de 404
+        if (cpf == null || cpf.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CPF não pode ser nulo ou vazio");
+        }
         if (random.nextBoolean()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "CPF não encontrado");
         }

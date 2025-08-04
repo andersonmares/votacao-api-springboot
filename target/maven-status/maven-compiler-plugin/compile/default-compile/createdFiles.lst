@@ -1,12 +1,15 @@
+com\anderson\votacao\client\CpfClient.class
 com\anderson\votacao\service\PautaService.class
 com\anderson\votacao\VotacaoApiApplication.class
 com\anderson\votacao\service\VotoService.class
+com\anderson\votacao\client\CpfResponse.class
 com\anderson\votacao\client\FakeCpfClient.class
 com\anderson\votacao\dto\VotoDTO.class
 com\anderson\votacao\dto\ResultadoDTO.class
 com\anderson\votacao\controller\SessaoController.class
 com\anderson\votacao\repository\SessaoRepository.class
 com\anderson\votacao\client\CpfStatus.class
+com\anderson\votacao\config\RestTemplateConfig.class
 com\anderson\votacao\exception\GlobalExceptionHandler.class
 com\anderson\votacao\controller\VotoController.class
 com\anderson\votacao\entity\Sessao.class
@@ -16,6 +19,7 @@ com\anderson\votacao\controller\PautaController.class
 com\anderson\votacao\dto\SessaoDTO.class
 com\anderson\votacao\config\SwaggerConfig.class
 com\anderson\votacao\entity\Voto$VotoBuilder.class
+com\anderson\votacao\client\BrasilApiResponse.class
 com\anderson\votacao\dto\VotoDTO$VotoDTOBuilder.class
 com\anderson\votacao\entity\Voto.class
 com\anderson\votacao\dto\SessaoDTO$SessaoDTOBuilder.class

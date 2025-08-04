@@ -16,14 +16,14 @@ public class Sessao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime inicio;
+    private LocalDateTime dataHoraInicio;
 
-    private LocalDateTime fim;
+    private LocalDateTime dataHoraFim;
 
     @OneToOne
     private Pauta pauta;
 
     public boolean isAberta() {
-        return LocalDateTime.now().isBefore(fim);
+        return LocalDateTime.now().isBefore(dataHoraFim);
     }
 }

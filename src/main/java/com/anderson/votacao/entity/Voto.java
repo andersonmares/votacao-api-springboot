@@ -1,5 +1,6 @@
 package com.anderson.votacao.entity;
 
+import com.anderson.votacao.dto.VotoDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,7 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"cpf", "pauta_id"}))
+@Table(name = "voto", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_voto_pauta_associado", columnNames = {"pauta_id", "associado_id"})
+})
 public class Voto {
 
     @Id
@@ -21,4 +24,9 @@ public class Voto {
 
     @ManyToOne
     private Pauta pauta;
+
+    private Integer associadoId;
+
+    public Voto(VotoDTO dto) {
+    }
 }

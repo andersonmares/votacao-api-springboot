@@ -1,7 +1,9 @@
 package com.anderson.votacao.service;
 
+import com.anderson.votacao.dto.SessaoDTO;
 import com.anderson.votacao.entity.Pauta;
 import com.anderson.votacao.entity.Sessao;
+import com.anderson.votacao.exception.BusinessException;
 import com.anderson.votacao.repository.PautaRepository;
 import com.anderson.votacao.repository.SessaoRepository;
 import org.springframework.stereotype.Service;
@@ -24,18 +26,13 @@ public class SessaoService {
         return sessaoRepository.findAll();
     }
 
-    public Sessao abrirSessao(Long pautaId, Integer duracaoMinutos) {
-        Pauta pauta = pautaRepository.findById(pautaId)
-                .orElseThrow(() -> new RuntimeException("Pauta não encontrada"));
-
-        if (sessaoRepository.findByPautaId(pautaId).isPresent()) {
-            throw new RuntimeException("Sessão já aberta para essa pauta");
-        }
-
+    public Sessao abrirSessao(SessaoDTO sessaoDTO) {
         Sessao sessao = new Sessao();
-        sessao.setPauta(pauta);
-        sessao.setInicio(LocalDateTime.now());
-        sessao.setFim(LocalDateTime.now().plusMinutes(duracaoMinutos != null ? duracaoMinutos : 1));
+        sessao.setPauta(pautaRepository.findById(sessaoDTO.getPautaId())
+                .orElseThrow(() -> new BusinessException("Pauta não encontrada")));
+        sessao.setDataHoraInicio(LocalDateTime.now());
+        long duracao = sessaoDTO.getDuracao() != null ? sessaoDTO.getDuracao() : 1L;
+        sessao.setDataHoraFim(sessao.getDataHoraInicio().plusMinutes(duracao));
         return sessaoRepository.save(sessao);
     }
 

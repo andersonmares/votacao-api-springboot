@@ -25,10 +25,7 @@ public class SessaoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void abrirSessao(@Valid @RequestBody SessaoDTO sessaoDTO) {
-        sessaoService.abrirSessao(
-                sessaoDTO.getPautaId(),
-                sessaoDTO.getDuracaoMinutos()
-        );
+        sessaoService.abrirSessao(sessaoDTO);
     }
 
     /**
@@ -41,7 +38,7 @@ public class SessaoController {
                 .map(s -> SessaoDTO.builder()
                         .pautaId(s.getPauta().getId())
                         // calcula duração em minutos entre início e fim
-                        .duracaoMinutos((int) Duration.between(s.getInicio(), s.getFim()).toMinutes())
+                        .duracaoMinutos((int) Duration.between(s.getDataHoraInicio(), s.getDataHoraFim()).toMinutes())
                         .build()
                 )
                 .collect(Collectors.toList());

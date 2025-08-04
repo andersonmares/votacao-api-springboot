@@ -11,7 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SessaoDTO {
+
     @NotNull(message = "pautaId é obrigatório")
     private Long pautaId;
-    private Integer duracaoMinutos; // opcional, default 1
+
+    private Integer duracaoMinutos;
+
+    private Integer duracao;
 }

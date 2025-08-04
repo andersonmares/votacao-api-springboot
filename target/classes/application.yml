@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: dev
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    info:
+      enabled: true
+
+info:
+  app:
+    name: Votacao API
+    version: 1.0.0

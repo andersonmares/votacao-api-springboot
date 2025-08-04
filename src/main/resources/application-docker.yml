@@ -1,0 +1,13 @@
+spring:
+  profiles: docker
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/votacao_db
+    driver-class-name: org.postgresql.Driver
+    username: votacao
+    password: votacao
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

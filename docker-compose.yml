@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: votacao
+      POSTGRES_PASSWORD: votacao
+      POSTGRES_DB: votacao_db
+    ports:
+      - '5432:5432'
+  app:
+    build: .
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: docker

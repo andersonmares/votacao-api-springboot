@@ -1,0 +1,4 @@
+com\example\votacao\controller\SessaoController.class
+com\example\votacao\controller\VotoController.class
+com\example\votacao\VotacaoApiApplication.class
+com\example\votacao\controller\PautaController.class

@@ -16,10 +16,10 @@ public class VotoDTO {
     @NotNull(message = "ID da pauta é obrigatório")
     private Long pautaId;
 
+    @NotNull(message = "ID do associado é obrigatório")
+    private Integer associadoId;
+
     @NotNull(message = "Voto (true/false) é obrigatório")
     private Boolean voto;
 
-    private Integer associadoId;
-
-    private String escolha;
 }

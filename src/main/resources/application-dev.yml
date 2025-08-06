@@ -1,9 +1,15 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:votacao;DB_CLOSE_DELAY=-1
+    # H2 em modo arquivo, persiste em ./data/votacao-db.mv.db
+    url: jdbc:h2:file:./data/votacao-db
     driver-class-name: org.h2.Driver
     username: sa
-    password: ""
+    password:
+    hikari:
+      maximum-pool-size: 50   # ajustável conforme carga
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
   jpa:
     hibernate:
       ddl-auto: update
@@ -13,6 +19,7 @@ spring:
       charset: UTF-8
       force: true
       enable: true
+
 cpf:
   service:
     url: https://brasilapi.com.br/api/cpf/v1

@@ -1,67 +1,48 @@
 package com.anderson.votacao.service;
 
-import com.anderson.votacao.client.CpfStatus;
-import com.anderson.votacao.client.FakeCpfClient;
 import com.anderson.votacao.dto.VotoDTO;
+import com.anderson.votacao.entity.Pauta;
 import com.anderson.votacao.entity.Voto;
 import com.anderson.votacao.exception.BusinessException;
 import com.anderson.votacao.repository.PautaRepository;
-import com.anderson.votacao.repository.SessaoRepository;
 import com.anderson.votacao.repository.VotoRepository;
+import com.anderson.votacao.service.validator.VotoValidator;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class VotoService {
 
-    private final VotoRepository votoRepository;
-    private final SessaoRepository sessaoRepository;
-    private final PautaRepository pautaRepository;
-    private final FakeCpfClient fakeCpfClient;
     private static final Logger logger = LoggerFactory.getLogger(VotoService.class);
 
-    /**
-     * Registra um voto a partir dos dados do DTO.
-     * Valida CPF antes de registrar o voto.
-     * @throws BusinessException em caso de regra de negócio violada
-     */
+    private final VotoRepository votoRepository;
+    private final PautaRepository pautaRepository;
+    private final List<VotoValidator> validadores;
+
     public Voto votar(VotoDTO dto) {
-        logger.info("Recebendo voto: pautaId={}, associadoId={}, escolha={}", dto.getPautaId(), dto.getAssociadoId(), dto.getEscolha());
+        logger.info("Recebendo voto: pautaId={}, associadoId={}, voto={}",
+                dto.getPautaId(), dto.getAssociadoId(), dto.getVoto());
 
-        // Validação de CPF via serviço externo
-        CpfStatus status;
-        try {
-            status = fakeCpfClient.verificarCpf(dto.getCpf());
-        } catch (ResponseStatusException ex) {
-            logger.warn("Erro na validação de CPF {}: status {}", dto.getCpf(), ex.getStatusCode());
-            throw ex;
-        }
-        if (status == CpfStatus.UNABLE_TO_VOTE) {
-            logger.warn("CPF {} não habilitado para votar", dto.getCpf());
-            throw new BusinessException("Associado não está habilitado para votar");
-        }
+        // Executa todos os validadores
+        validadores.forEach(validador -> validador.validar(dto));
 
-        // Verifica se sessão está aberta
-        if (!sessaoRepository.existsByPautaIdAndDataHoraFimAfter(dto.getPautaId(), LocalDateTime.now())) {
-            logger.warn("Sessão não está aberta para pauta {}", dto.getPautaId());
-            throw new BusinessException("Sessão não está aberta");
-        }
+        Pauta pauta = pautaRepository.findById(dto.getPautaId())
+                .orElseThrow(() -> new BusinessException("Pauta não encontrada"));
 
-        // Verifica voto único
-        if (votoRepository.existsByPautaIdAndAssociadoId(dto.getPautaId(), dto.getAssociadoId())) {
-            logger.warn("Associado {} já votou na pauta {}", dto.getAssociadoId(), dto.getPautaId());
-            throw new BusinessException("Associado já votou nesta pauta");
-        }
+        Voto voto = Voto.builder()
+                .cpf(dto.getCpf())
+                .associadoId(dto.getAssociadoId())
+                .voto(dto.getVoto())
+                .pauta(pauta)
+                .build();
 
-        Voto voto = new Voto(dto);
         Voto salvo = votoRepository.save(voto);
-        logger.info("Voto salvo: id={}", salvo.getId());
+        logger.info("Voto salvo com id={}", salvo.getId());
         return salvo;
     }
 

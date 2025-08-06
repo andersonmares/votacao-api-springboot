@@ -1,4 +1,5 @@
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\controller\SessaoController.java
+D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\service\validator\VotoDuplicadoValidator.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\entity\Sessao.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\client\CpfStatus.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\VotacaoApiApplication.java
@@ -12,15 +13,20 @@ D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votac
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\config\RestTemplateConfig.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\client\BrasilApiResponse.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\controller\VotoController.java
+D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\service\validator\CpfStatusValidator.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\exception\BusinessException.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\repository\PautaRepository.java
+D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\service\validator\CpfObrigatorioValidator.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\repository\VotoRepository.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\service\PautaService.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\client\FakeCpfClient.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\dto\PautaDTO.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\service\VotoService.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\controller\PautaController.java
+D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\service\validator\VotoValidator.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\dto\SessaoDTO.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\entity\Voto.java
+D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\service\validator\AssociadoObrigatorioValidator.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\dto\ResultadoDTO.java
+D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\service\validator\SessaoAbertaValidator.java
 D:\workspace\estudo\desafio-votacao\votacao-api\src\main\java\com\anderson\votacao\client\CpfClient.java

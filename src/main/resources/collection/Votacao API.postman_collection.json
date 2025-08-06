@@ -46,7 +46,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"pautaId\": 1,\n  \"duracaoMinutos\": 5\n}"
+					"raw": "{\n  \"pautaId\": 4,\n  \"duracaoMinutos\": 5\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/api/v1/sessoes",
@@ -74,7 +74,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"cpf\": \"12345678901\",\n  \"pautaId\": 1,\n  \"voto\": true\n}"
+					"raw": "{\n  \"cpf\": \"12345678901\",\n  \"pautaId\": 4,\n  \"voto\": true,\n  \"associadoId\": 2\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/api/v1/votos",
@@ -102,7 +102,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"cpf\": \"10987654321\",\n  \"pautaId\": 1,\n  \"voto\": false\n}"
+					"raw": "{\n  \"cpf\": \"10987654321\",\n  \"pautaId\": 4,\n  \"voto\": false,\n  \"associadoId\": 3\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/api/v1/votos",

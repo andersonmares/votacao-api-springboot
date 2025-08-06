@@ -1,0 +1,7 @@
+com\anderson\votacao\validator\VotoDuplicadoValidatorTest.class
+com\anderson\votacao\service\VotoServiceTest.class
+com\anderson\votacao\validator\CpfObrigatorioValidatorTest.class
+com\anderson\votacao\controller\SessaoControllerTest.class
+com\anderson\votacao\validator\SessaoAbertaValidatorTest.class
+com\anderson\votacao\controller\PautaControllerTest.class
+com\anderson\votacao\validator\CpfStatusValidatorTest.class

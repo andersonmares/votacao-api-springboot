@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "6381ddd6-d97c-42ec-874f-abcb4660a411",
+		"name": "Votacao API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7450646"
+	},
+	"item": [
+		{
+			"name": "1 - Criar Pauta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"titulo\": \"Reforma do Estatuto\",\n  \"descricao\": \"Pauta para discutir mudanças no estatuto\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/pautas",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pautas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 - Abrir Sessão",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"pautaId\": 1,\n  \"duracaoMinutos\": 5\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/sessoes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sessoes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 - Votar (Sim)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cpf\": \"12345678901\",\n  \"pautaId\": 1,\n  \"voto\": true\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/votos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"votos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 - Votar (Não)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"cpf\": \"10987654321\",\n  \"pautaId\": 1,\n  \"voto\": false\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/votos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"votos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Pautas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/pautas",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pautas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Sessões",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/sessoes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sessoes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resultado da Pauta",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/pautas/1/resultado",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"pautas",
+						"1",
+						"resultado"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/actuator/health",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/actuator/info",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"actuator",
+						"info"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

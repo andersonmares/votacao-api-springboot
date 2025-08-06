@@ -46,7 +46,7 @@ API REST para gerenciar assembleias de cooperativismo, permitindo criar pautas, 
     - **GET /api/v1/pautas** — listar pautas
     - **POST /api/v1/sessoes** — abrir sessão (`{ "pautaId":1, "duracaoMinutos":5 }`)
     - **GET /api/v1/sessoes** — listar sessões
-    - **POST /api/v1/votos** — registrar voto (`{ "cpf":"…","pautaId":1,"voto":true }`)
+    - **POST /api/v1/votos** — registrar voto (`{ "cpf":"…","pautaId":1,"voto":true, "associadoId":1 }`)
     - **GET /api/v1/pautas/{id}/resultado** — resultado da votação
     - **Actuator**:
         - **GET /actuator/health**
@@ -94,22 +94,39 @@ docker-compose down
 votacao-api-springboot/
 ├─ src/
 │  ├─ main/
-│  │  ├─ java/com/example/votacao/
-│  │  │  ├─ controller/      ← Controllers REST  
-│  │  │  ├─ dto/             ← DTOs de entrada/saída  
-│  │  │  ├─ entity/          ← Entidades JPA (Lombok)  
-│  │  │  ├─ exception/       ← Handlers de erros  
-│  │  │  ├─ repository/      ← Spring Data Repos  
-│  │  │  └─ service/         ← Lógica de negócio  
-│  │  ├─ resources/          
-│  │  │  ├─ application.yml  
-│  │  │  ├─ application-dev.yml  
-│  │  │  └─ application-docker.yml  
-│  └─ test/                  ← Testes unitários  
-├─ Dockerfile                
-├─ docker-compose.yml        
-├─ pom.xml                   
-└─ README.md                 
+│  │  ├─ java/com/anderson/votacao/
+│  │  │  ├─ controller/           ← Controllers REST
+│  │  │  ├─ dto/                  ← DTOs de entrada/saída
+│  │  │  ├─ entity/               ← Entidades JPA (Lombok)
+│  │  │  ├─ exception/            ← Exceções e handlers
+│  │  │  ├─ repository/           ← Spring Data JPA
+│  │  │  ├─ service/              ← Regras de negócio
+│  │  │  └─ validation/           ← Validadores SOLID
+│  │  │     ├─ Validador.java
+│  │  │     ├─ CpfObrigatorioValidator.java
+│  │  │     ├─ CpfStatusValidator.java
+│  │  │     ├─ SessaoAbertaValidator.java
+│  │  │     └─ JaVotouValidator.java
+│  │  ├─ resources/
+│  │  │  ├─ application.yml
+│  │  │  ├─ application-dev.yml
+│  │  │  ├─ application-docker.yml
+│  │  │  └─ db/
+│  │  │     └─ migration/         ← Scripts SQL para Flyway (ex: V1__init.sql)
+│  ├─ test/
+│  │  └─ java/com/anderson/votacao/
+│  │     ├─ service/              ← Testes de serviço (ex: VotoServiceTest)
+│  │     └─ validation/           ← Testes unitários dos validadores
+│
+├─ src/gatling/                 ← Testes de performance (Gatling)
+│  └─ simulations/
+│     └─ VotacaoSimulation.scala
+│
+├─ Dockerfile
+├─ docker-compose.yml
+├─ pom.xml
+└─ README.md
+               
 ```
 
 ---

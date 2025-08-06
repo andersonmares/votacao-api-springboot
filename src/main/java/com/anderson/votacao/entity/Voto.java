@@ -1,5 +1,6 @@
 package com.anderson.votacao.entity;
 
+import com.anderson.votacao.dto.VotoDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,4 +35,6 @@ public class Voto {
     @JoinColumn(name = "pauta_id", nullable = false)
     private Pauta pauta;
 
+    public Voto(VotoDTO dto) {
+    }
 }

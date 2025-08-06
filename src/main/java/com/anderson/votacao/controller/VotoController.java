@@ -14,9 +14,6 @@ public class VotoController {
 
     private final VotoService votoService;
 
-    /**
-     * Recebe um VotoDTO no body e delega ao service.
-     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void votar(@Valid @RequestBody VotoDTO votoDTO) {

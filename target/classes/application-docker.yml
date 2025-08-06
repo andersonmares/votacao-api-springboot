@@ -6,16 +6,23 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${DB_USER:}
     password: ${DB_PASS:}
+    hikari:
+      maximum-pool-size: 50   # ajustável conforme carga
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
   http:
     encoding:
       charset: UTF-8
       force: true
       enable: true
+
 cpf:
   service:
     url: https://brasilapi.com.br/api/cpf/v1

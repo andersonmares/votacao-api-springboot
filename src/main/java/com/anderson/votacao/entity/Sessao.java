@@ -20,7 +20,8 @@ public class Sessao {
 
     private LocalDateTime dataHoraFim;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "pauta_id", nullable = false)
     private Pauta pauta;
 
     public boolean isAberta() {

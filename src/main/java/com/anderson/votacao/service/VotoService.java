@@ -18,12 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VotoService {
 
-    private static final Logger logger = LoggerFactory.getLogger(VotoService.class);
-
     private final VotoRepository votoRepository;
     private final PautaRepository pautaRepository;
     private final List<VotoValidator> validators;
-    private final VotoEventProducer votoEventProducer;
 
     public Voto salvar(VotoDTO dto) {
         Pauta pauta = pautaRepository.findById(dto.getPautaId())
@@ -40,16 +37,7 @@ public class VotoService {
                 .voto(dto.getVoto())
                 .build();
 
-        Voto salvo = votoRepository.save(voto);
-
-        votoEventProducer.publicar(
-                com.anderson.votacao.kafka.dto.VotoEvent.builder()
-                        .pautaId(salvo.getPauta().getId())
-                        .associadoId(salvo.getAssociadoId())
-                        .voto(salvo.getVoto())
-                        .build()
-        );
-        return salvo;
+        return votoRepository.save(voto);
     }
 
     public long contarVotosSim(Long pautaId) {

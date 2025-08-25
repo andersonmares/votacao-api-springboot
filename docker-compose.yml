@@ -41,6 +41,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/votacao
       SPRING_DATASOURCE_USERNAME: votacao
       SPRING_DATASOURCE_PASSWORD: votacao
+      APP_KAFKA_ENABLED: "true"
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
 volumes:
   votacao-data:

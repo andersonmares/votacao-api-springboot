@@ -1,5 +1,19 @@
+app:
+  kafka:
+    enabled: true
+    topic:
+      votos: votos
+
 spring:
   profiles: docker
+
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
 
   datasource:
     url: jdbc:postgresql://postgres:5432/votacao

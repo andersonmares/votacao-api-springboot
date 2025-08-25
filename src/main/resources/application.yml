@@ -3,14 +3,16 @@ spring:
     active: ${profiles.active:dev}
   http:
     encoding:
-      charset: UTF-8
-      force: true
       enable: true
 
 server:
   error:
     include-message: always
     include-binding-errors: always
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
 
 management:
   endpoints:

@@ -27,12 +27,23 @@ public class SessaoService {
     }
 
     public Sessao abrirSessao(SessaoDTO sessaoDTO) {
-        Sessao sessao = new Sessao();
-        sessao.setPauta(pautaRepository.findById(sessaoDTO.getPautaId())
-                .orElseThrow(() -> new BusinessException("Pauta não encontrada")));
-        sessao.setDataHoraInicio(LocalDateTime.now());
-        long duracao = sessaoDTO.getDuracao() != null ? sessaoDTO.getDuracao() : 1L;
-        sessao.setDataHoraFim(sessao.getDataHoraInicio().plusMinutes(duracao));
+        Pauta pauta = pautaRepository.findById(sessaoDTO.getPautaId())
+                .orElseThrow(() -> new BusinessException("Pauta não encontrada"));
+
+        LocalDateTime agora = LocalDateTime.now();
+
+        if (sessaoRepository.existsByPautaIdAndDataHoraFimAfter(pauta.getId(), agora)) {
+            throw new BusinessException("Já existe sessão ativa para esta pauta");
+        }
+
+        long duracao = sessaoDTO.resolveDuracaoMinutosOrDefault(1L);
+
+        Sessao sessao = Sessao.builder()
+                .pauta(pauta)
+                .dataHoraInicio(agora)
+                .dataHoraFim(agora.plusMinutes(duracao))
+                .build();
+
         return sessaoRepository.save(sessao);
     }
 

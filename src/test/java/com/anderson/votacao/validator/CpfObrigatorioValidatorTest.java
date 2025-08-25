@@ -5,6 +5,7 @@ import com.anderson.votacao.exception.BusinessException;
 import com.anderson.votacao.service.validator.CpfObrigatorioValidator;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CpfObrigatorioValidatorTest {
@@ -29,5 +30,20 @@ class CpfObrigatorioValidatorTest {
     void naoDeveLancarExcecaoQuandoCpfForValido() {
         VotoDTO dto = new VotoDTO("12345678900", 1L, 1, true);
         assertDoesNotThrow(() -> validator.validar(dto));
+    }
+
+    @Test
+    void deveLancarQuandoCpfVazioOuNulo() {
+        assertThatThrownBy(() ->
+                validator.validar(VotoDTO.builder().cpf(null).build())
+        )
+                .isInstanceOf(BusinessException.class)
+                .hasMessage("O campo CPF é obrigatório");
+
+        assertThatThrownBy(() ->
+                validator.validar(VotoDTO.builder().cpf("   ").build())
+        )
+                .isInstanceOf(BusinessException.class)
+                .hasMessage("O campo CPF é obrigatório");
     }
 }

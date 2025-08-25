@@ -1,12 +1,14 @@
+app:
+  kafka:
+    enabled: false
+
 spring:
   datasource:
-    # H2 em modo arquivo, persiste em ./data/votacao-db.mv.db
-    url: jdbc:h2:file:./data/votacao-db
-    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./data/votacao-db;MODE=LEGACY
     username: sa
     password:
     hikari:
-      maximum-pool-size: 50   # ajustável conforme carga
+      maximum-pool-size: 50
       minimum-idle: 10
       idle-timeout: 600000
       max-lifetime: 1800000
@@ -14,6 +16,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   http:
     encoding:
       charset: UTF-8

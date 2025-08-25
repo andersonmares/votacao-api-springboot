@@ -3,7 +3,7 @@ package com.anderson.votacao.service;
 import com.anderson.votacao.dto.VotoDTO;
 import com.anderson.votacao.entity.Pauta;
 import com.anderson.votacao.entity.Voto;
-import com.anderson.votacao.exception.BusinessException;
+import com.anderson.votacao.kafka.VotoEventProducer;
 import com.anderson.votacao.repository.PautaRepository;
 import com.anderson.votacao.repository.VotoRepository;
 import com.anderson.votacao.service.validator.VotoValidator;
@@ -22,27 +22,33 @@ public class VotoService {
 
     private final VotoRepository votoRepository;
     private final PautaRepository pautaRepository;
-    private final List<VotoValidator> validadores;
+    private final List<VotoValidator> validators;
+    private final VotoEventProducer votoEventProducer;
 
-    public Voto votar(VotoDTO dto) {
-        logger.info("Recebendo voto: pautaId={}, associadoId={}, voto={}",
-                dto.getPautaId(), dto.getAssociadoId(), dto.getVoto());
-
-        // Executa todos os validadores
-        validadores.forEach(validador -> validador.validar(dto));
-
+    public Voto salvar(VotoDTO dto) {
         Pauta pauta = pautaRepository.findById(dto.getPautaId())
-                .orElseThrow(() -> new BusinessException("Pauta não encontrada"));
+                .orElseThrow(() -> new IllegalArgumentException("Pauta não encontrada: " + dto.getPautaId()));
+
+        for (VotoValidator v : validators) {
+            v.validate(dto, pauta);
+        }
 
         Voto voto = Voto.builder()
                 .cpf(dto.getCpf())
+                .pauta(pauta)
                 .associadoId(dto.getAssociadoId())
                 .voto(dto.getVoto())
-                .pauta(pauta)
                 .build();
 
         Voto salvo = votoRepository.save(voto);
-        logger.info("Voto salvo com id={}", salvo.getId());
+
+        votoEventProducer.publicar(
+                com.anderson.votacao.kafka.dto.VotoEvent.builder()
+                        .pautaId(salvo.getPauta().getId())
+                        .associadoId(salvo.getAssociadoId())
+                        .voto(salvo.getVoto())
+                        .build()
+        );
         return salvo;
     }
 

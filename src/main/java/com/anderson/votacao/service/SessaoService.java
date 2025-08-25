@@ -31,7 +31,7 @@ public class SessaoService {
         sessao.setPauta(pautaRepository.findById(sessaoDTO.getPautaId())
                 .orElseThrow(() -> new BusinessException("Pauta não encontrada")));
         sessao.setDataHoraInicio(LocalDateTime.now());
-        long duracao = sessaoDTO.getDuracao() != null ? sessaoDTO.getDuracao() : 1L;
+        long duracao = sessaoDTO.resolveDuracaoMinutosOrDefault(1L);
         sessao.setDataHoraFim(sessao.getDataHoraInicio().plusMinutes(duracao));
         return sessaoRepository.save(sessao);
     }

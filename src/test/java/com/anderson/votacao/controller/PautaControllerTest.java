@@ -38,7 +38,7 @@ public class PautaControllerTest {
 
         mockMvc.perform(post("/api/v1/pautas")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"descricao\":\"Teste\"}"))
+                        .content("{\"titulo\":\"Teste\",\"descricao\":\"Teste\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1));
     }

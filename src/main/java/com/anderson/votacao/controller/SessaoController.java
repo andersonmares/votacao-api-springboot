@@ -1,16 +1,15 @@
 package com.anderson.votacao.controller;
 
 import com.anderson.votacao.dto.SessaoDTO;
+import com.anderson.votacao.dto.SessaoResponseDTO;
 import com.anderson.votacao.entity.Sessao;
+import com.anderson.votacao.mapper.SessaoMapper;
 import com.anderson.votacao.service.SessaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/sessoes")
@@ -18,29 +17,11 @@ import java.util.stream.Collectors;
 public class SessaoController {
 
     private final SessaoService sessaoService;
+    private final SessaoMapper sessaoMapper;
 
-    /**
-     * Abre uma sessão de votação para a pauta informada.
-     */
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void abrirSessao(@Valid @RequestBody SessaoDTO sessaoDTO) {
-        sessaoService.abrirSessao(sessaoDTO);
-    }
-
-    /**
-     * Lista todas as sessões abertas (ou já encerradas) no sistema.
-     */
-    @GetMapping
-    public List<SessaoDTO> listarSessoes() {
-        List<Sessao> sessoes = sessaoService.listarTodas();
-        return sessoes.stream()
-                .map(s -> SessaoDTO.builder()
-                        .pautaId(s.getPauta().getId())
-                        // calcula duração em minutos entre início e fim
-                        .duracaoMinutos((int) Duration.between(s.getDataHoraInicio(), s.getDataHoraFim()).toMinutes())
-                        .build()
-                )
-                .collect(Collectors.toList());
+    public ResponseEntity<SessaoResponseDTO> abrir(@Valid @RequestBody SessaoDTO dto) {
+        Sessao s = sessaoService.abrirSessao(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sessaoMapper.toResponse(s));
     }
 }

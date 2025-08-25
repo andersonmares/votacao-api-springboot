@@ -7,7 +7,8 @@ import com.anderson.votacao.exception.BusinessException;
 import com.anderson.votacao.service.validator.CpfStatusValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -38,6 +39,16 @@ class CpfStatusValidatorTest {
         VotoDTO dto = new VotoDTO("12345678900", 1L, 1, true);
 
         assertDoesNotThrow(() -> validator.validar(dto));
+    }
+
+    @Test
+    void devePropagarResponseStatusExceptionDoCliente() {
+        when(cpfClient.verificarCpf("12345678900"))
+                .thenThrow(new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "indisponível"));
+
+        VotoDTO dto = new VotoDTO("12345678900", 1L, 1, true);
+
+        assertThrows(ResponseStatusException.class, () -> validator.validar(dto));
     }
 
     @Test
